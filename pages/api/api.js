@@ -9,5 +9,5 @@ export default async (req, res) => {
       },
     }
   )
-  res.status(200).json({ data: response.data })
+  res.status(200).json(response.data)
 }
