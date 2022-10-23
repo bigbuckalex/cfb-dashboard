@@ -13,12 +13,14 @@ import {
 import { IoMdRefresh } from "react-icons/io"
 import PastGames from "./PastGames"
 import ActiveGames from "./ActiveGames"
+import FutureGames from "./FutureGames"
+import useLocalStorage from "../hooks/useLocalStorage"
 
 const GamesList = () => {
   const [error, setError] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
   const [gamesData, setGamesData] = useState([])
-  const [tab, setTab] = useState("now")
+  const [tab, setTab] = useLocalStorage("now")
 
   useEffect(() => {
     axios.get("/api/api").then(
@@ -48,13 +50,25 @@ const GamesList = () => {
           <AccordionItem>
             <h2>
               <Flex p={4} w="100%" justify="space-between">
-                <Button onClick={() => setTab("past")} flexGrow={1}>
+                <Button
+                  variant={tab === "past" ? "solid" : "outline"}
+                  onClick={() => setTab("past")}
+                  w="32%"
+                >
                   Past
                 </Button>
-                <Button onClick={() => setTab("now")} mx={4} flexGrow={1}>
+                <Button
+                  variant={tab === "now" ? "solid" : "outline"}
+                  onClick={() => setTab("now")}
+                  w="32%"
+                >
                   Now
                 </Button>
-                <Button onClick={() => setTab("future")} flexGrow={1}>
+                <Button
+                  variant={tab === "future" ? "solid" : "outline"}
+                  onClick={() => setTab("future")}
+                  w="32%"
+                >
                   Future
                 </Button>
               </Flex>
@@ -73,8 +87,9 @@ const GamesList = () => {
             </h2>
           </AccordionItem>
           {tab === "past" && <PastGames gamesData={gamesData} />}
-
           {tab === "now" && <ActiveGames gamesData={gamesData} />}
+          {tab === "future" && <FutureGames gamesData={gamesData} />}
+
           <AccordionItem>
             <h2>
               <Box p={4} w="100%" textAlign="right">

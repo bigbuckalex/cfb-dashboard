@@ -6,28 +6,30 @@ import {
   AccordionPanel,
   VStack,
   Text,
-  Divider,
 } from "@chakra-ui/react"
 
-const PastGames = ({ gamesData }) => {
+const FutureGames = ({ gamesData }) => {
   return (
     <>
       {gamesData.map(
         (game) =>
-          game.status === "completed" && (
+          game.status === "scheduled" && (
             <AccordionItem key={game.id}>
               <h2>
                 <AccordionButton>
                   <VStack w="100%">
                     <Box w="100%" textAlign="center">
-                      Final
+                      {game.tv ?? "Not Broadcast"}
                     </Box>
                     <Flex w="100%">
                       <Box textAlign="left" w="45%">
                         {game.homeTeam.name}
                       </Box>
                       <Box w="30%">
-                        {game.homeTeam.points}-{game.awayTeam.points}{" "}
+                        <Text>
+                          {game.startDate.slice(5, 10)} - Kickoff:{" "}
+                          {game.startDate.slice(11, 16)}
+                        </Text>
                       </Box>
                       <Box textAlign="right" w="45%">
                         {game.awayTeam.name}
@@ -37,11 +39,6 @@ const PastGames = ({ gamesData }) => {
                 </AccordionButton>
               </h2>
               <AccordionPanel textAlign="center" pb={4}>
-                <Text>
-                  {game.startDate.slice(5, 10)} - Kickoff:{" "}
-                  {game.startDate.slice(11, 16)}
-                </Text>
-                <Divider />
                 <Text>{`${game.venue.name} - ${game.venue.city}, ${game.venue.state}`}</Text>
               </AccordionPanel>
             </AccordionItem>
@@ -51,4 +48,4 @@ const PastGames = ({ gamesData }) => {
   )
 }
 
-export default PastGames
+export default FutureGames
