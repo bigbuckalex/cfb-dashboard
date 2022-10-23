@@ -1,4 +1,4 @@
-import { useState } from "react"
+import Moment from "react-moment"
 import {
   Flex,
   Box,
@@ -40,9 +40,18 @@ const PastGames = ({ gamesData, search }) => {
                 </AccordionButton>
               </h2>
               <AccordionPanel textAlign="center" pb={4}>
-                <Text>
+                {/* <Text>
                   {game.startDate.slice(5, 10)} - Kickoff:{" "}
                   {game.startDate.slice(11, 16)}
+                </Text> */}
+                <Text>
+                  <Moment format="MM/DD" interval={0}>
+                    {game.startDate}
+                  </Moment>{" "}
+                  - Kickoff:{" "}
+                  <Moment format="h:mma" interval={0}>
+                    {game.startDate}
+                  </Moment>
                 </Text>
                 <Divider />
                 <Text>{`${game.venue.name} - ${game.venue.city}, ${game.venue.state}`}</Text>

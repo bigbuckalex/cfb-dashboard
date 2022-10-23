@@ -1,3 +1,4 @@
+import Moment from "react-moment"
 import {
   Flex,
   Box,
@@ -29,8 +30,13 @@ const FutureGames = ({ gamesData, search }) => {
                       </Box>
                       <Box w="30%">
                         <Text>
-                          {game.startDate.slice(5, 10)} - Kickoff:{" "}
-                          {game.startDate.slice(11, 16)}
+                          <Moment format="MM/DD" interval={0}>
+                            {game.startDate}
+                          </Moment>{" "}
+                          - Kickoff:{" "}
+                          <Moment format="h:mma" interval={0}>
+                            {game.startDate}
+                          </Moment>
                         </Text>
                       </Box>
                       <Box textAlign="right" w="45%">
