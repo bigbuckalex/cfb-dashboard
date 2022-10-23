@@ -12,6 +12,7 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  Progress,
 } from "@chakra-ui/react"
 import { IoMdRefresh } from "react-icons/io"
 import PastGames from "./PastGames"
@@ -22,6 +23,7 @@ import useLocalStorage from "../hooks/useLocalStorage"
 const GamesList = () => {
   const [error, setError] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
+  const [refreshing, setRefreshing] = useState(false)
   const [gamesData, setGamesData] = useState([])
   const [search, setSearch] = useState("")
   const [tab, setTab] = useLocalStorage("now")
@@ -38,6 +40,24 @@ const GamesList = () => {
       }
     )
   }, [])
+
+  const refresh = () => {
+    setRefreshing(true)
+    axios.get("/api/api").then(
+      (result) => {
+        setGamesData(result.data)
+        setTimeout(() => {
+          setRefreshing(false)
+        }, 1500)
+      },
+      (error) => {
+        setError(error)
+        setTimeout(() => {
+          setRefreshing(false)
+        }, 1500)
+      }
+    )
+  }
 
   const clearSearch = () => {
     setSearch("")
@@ -92,18 +112,6 @@ const GamesList = () => {
             </h2>
           </AccordionItem>
           <AccordionItem>
-            {/* <InputGroup>
-              <Input
-                value={search}
-                onChange={(e) => setSearch(e.target.value.toLowerCase())}
-                w="calc(100% - 2rem)"
-                m={4}
-                placeholder="Search by team"
-              />
-              <InputRightElement>
-                <Button size="sm">Clear</Button>
-              </InputRightElement>
-            </InputGroup> */}
             <InputGroup size="md">
               <Input
                 value={search}
@@ -132,6 +140,11 @@ const GamesList = () => {
               </Flex>
             </h2>
           </AccordionItem>
+          <Progress
+            visibility={!refreshing && "hidden"}
+            size="xs"
+            isIndeterminate
+          />
           {tab === "past" && (
             <PastGames gamesData={gamesData} search={search} />
           )}
@@ -141,12 +154,16 @@ const GamesList = () => {
           {tab === "future" && (
             <FutureGames gamesData={gamesData} search={search} />
           )}
-
+          <Progress
+            visibility={!refreshing && "hidden"}
+            size="xs"
+            isIndeterminate
+          />
           <AccordionItem>
             <h2>
               <Box p={4} w="100%" textAlign="right">
                 <IconButton
-                  onClick={() => window.location.reload()}
+                  onClick={refresh}
                   aria-label="refresh"
                   icon={<IoMdRefresh />}
                 />

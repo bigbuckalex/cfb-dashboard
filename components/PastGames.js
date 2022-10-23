@@ -1,4 +1,3 @@
-import Moment from "react-moment"
 import {
   Flex,
   Box,
@@ -9,6 +8,7 @@ import {
   Text,
   Divider,
 } from "@chakra-ui/react"
+import Moment from "react-moment"
 
 const PastGames = ({ gamesData, search }) => {
   return (
@@ -40,10 +40,6 @@ const PastGames = ({ gamesData, search }) => {
                 </AccordionButton>
               </h2>
               <AccordionPanel textAlign="center" pb={4}>
-                {/* <Text>
-                  {game.startDate.slice(5, 10)} - Kickoff:{" "}
-                  {game.startDate.slice(11, 16)}
-                </Text> */}
                 <Text>
                   <Moment format="MM/DD" interval={0}>
                     {game.startDate}

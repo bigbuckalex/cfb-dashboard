@@ -1,4 +1,3 @@
-import Moment from "react-moment"
 import {
   Flex,
   Box,
@@ -8,6 +7,7 @@ import {
   VStack,
   Text,
 } from "@chakra-ui/react"
+import Moment from "react-moment"
 
 const FutureGames = ({ gamesData, search }) => {
   return (
