@@ -74,7 +74,7 @@ const GamesList = () => {
   } else {
     return (
       <>
-        <Accordion w="100%" allowToggle>
+        <Accordion w="100%" maxWidth={700} allowToggle>
           <AccordionItem>
             <h2>
               <Flex p={4} w="100%" justify="space-between">
