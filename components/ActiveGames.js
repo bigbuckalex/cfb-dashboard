@@ -29,13 +29,15 @@ const getFormattedPeriod = (period) => {
   }
 }
 
-const ActiveGames = ({ gamesData }) => {
+const ActiveGames = ({ gamesData, search }) => {
   return (
     <>
       {gamesData.map(
         (game) =>
           game.status === "in_progress" &&
-          game.tv && (
+          game.tv &&
+          (game.homeTeam.name.toLowerCase().includes(search) ||
+            game.awayTeam.name.toLowerCase().includes(search)) && (
             <AccordionItem key={game.id}>
               <h2>
                 <AccordionButton>

@@ -1,3 +1,4 @@
+import { useState } from "react"
 import {
   Flex,
   Box,
@@ -9,12 +10,14 @@ import {
   Divider,
 } from "@chakra-ui/react"
 
-const PastGames = ({ gamesData }) => {
+const PastGames = ({ gamesData, search }) => {
   return (
     <>
       {gamesData.map(
         (game) =>
-          game.status === "completed" && (
+          game.status === "completed" &&
+          (game.homeTeam.name.toLowerCase().includes(search) ||
+            game.awayTeam.name.toLowerCase().includes(search)) && (
             <AccordionItem key={game.id}>
               <h2>
                 <AccordionButton>

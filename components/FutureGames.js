@@ -8,12 +8,14 @@ import {
   Text,
 } from "@chakra-ui/react"
 
-const FutureGames = ({ gamesData }) => {
+const FutureGames = ({ gamesData, search }) => {
   return (
     <>
       {gamesData.map(
         (game) =>
-          game.status === "scheduled" && (
+          game.status === "scheduled" &&
+          (game.homeTeam.name.toLowerCase().includes(search) ||
+            game.awayTeam.name.toLowerCase().includes(search)) && (
             <AccordionItem key={game.id}>
               <h2>
                 <AccordionButton>

@@ -9,6 +9,9 @@ import {
   Spinner,
   Center,
   Button,
+  Input,
+  InputGroup,
+  InputRightElement,
 } from "@chakra-ui/react"
 import { IoMdRefresh } from "react-icons/io"
 import PastGames from "./PastGames"
@@ -20,6 +23,7 @@ const GamesList = () => {
   const [error, setError] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
   const [gamesData, setGamesData] = useState([])
+  const [search, setSearch] = useState("")
   const [tab, setTab] = useLocalStorage("now")
 
   useEffect(() => {
@@ -34,6 +38,10 @@ const GamesList = () => {
       }
     )
   }, [])
+
+  const clearSearch = () => {
+    setSearch("")
+  }
 
   if (error) {
     return <div>Error: {error.message}</div>
@@ -52,27 +60,65 @@ const GamesList = () => {
               <Flex p={4} w="100%" justify="space-between">
                 <Button
                   variant={tab === "past" ? "solid" : "outline"}
-                  onClick={() => setTab("past")}
+                  onClick={() => {
+                    clearSearch()
+                    setTab("past")
+                  }}
                   w="32%"
                 >
                   Past
                 </Button>
                 <Button
                   variant={tab === "now" ? "solid" : "outline"}
-                  onClick={() => setTab("now")}
+                  onClick={() => {
+                    setTab("now")
+                    clearSearch()
+                  }}
                   w="32%"
                 >
                   Now
                 </Button>
                 <Button
                   variant={tab === "future" ? "solid" : "outline"}
-                  onClick={() => setTab("future")}
+                  onClick={() => {
+                    setTab("future")
+                    clearSearch()
+                  }}
                   w="32%"
                 >
                   Future
                 </Button>
               </Flex>
             </h2>
+          </AccordionItem>
+          <AccordionItem>
+            {/* <InputGroup>
+              <Input
+                value={search}
+                onChange={(e) => setSearch(e.target.value.toLowerCase())}
+                w="calc(100% - 2rem)"
+                m={4}
+                placeholder="Search by team"
+              />
+              <InputRightElement>
+                <Button size="sm">Clear</Button>
+              </InputRightElement>
+            </InputGroup> */}
+            <InputGroup size="md">
+              <Input
+                value={search}
+                onChange={(e) => setSearch(e.target.value.toLowerCase())}
+                w="calc(100% - 2rem)"
+                m={4}
+                pr="4.5rem"
+                placeholder="Search by team"
+              />
+              <InputRightElement width="6.5rem">
+                <Button mt="2rem" h="1.75rem" size="sm" onClick={clearSearch}>
+                  Clear
+                </Button>
+              </InputRightElement>
+            </InputGroup>
           </AccordionItem>
           <AccordionItem>
             <h2>
@@ -86,9 +132,15 @@ const GamesList = () => {
               </Flex>
             </h2>
           </AccordionItem>
-          {tab === "past" && <PastGames gamesData={gamesData} />}
-          {tab === "now" && <ActiveGames gamesData={gamesData} />}
-          {tab === "future" && <FutureGames gamesData={gamesData} />}
+          {tab === "past" && (
+            <PastGames gamesData={gamesData} search={search} />
+          )}
+          {tab === "now" && (
+            <ActiveGames gamesData={gamesData} search={search} />
+          )}
+          {tab === "future" && (
+            <FutureGames gamesData={gamesData} search={search} />
+          )}
 
           <AccordionItem>
             <h2>
