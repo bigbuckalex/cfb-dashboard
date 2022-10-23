@@ -29,6 +29,10 @@ const getFormattedPeriod = (period) => {
   }
 }
 
+const isHalftime = (game) => {
+  return game.clock.slice(3) === "00:00" && game.period === 2
+}
+
 const ActiveGames = ({ gamesData, search }) => {
   return (
     <>
@@ -45,12 +49,18 @@ const ActiveGames = ({ gamesData, search }) => {
                     <Flex w="100%" justify="space-between">
                       <Icon
                         as={IoMdAmericanFootball}
-                        visibility={game.possession !== "home" && "hidden"}
+                        visibility={
+                          (game.possession !== "home" || isHalftime(game)) &&
+                          "hidden"
+                        }
                       />
                       <Box>{game.tv}</Box>
                       <Icon
                         as={IoMdAmericanFootball}
-                        visibility={game.possession !== "away" && "hidden"}
+                        visibility={
+                          (game.possession !== "away" || isHalftime(game)) &&
+                          "hidden"
+                        }
                       />
                     </Flex>
                     <Flex w="100%">
@@ -68,7 +78,7 @@ const ActiveGames = ({ gamesData, search }) => {
                 </AccordionButton>
               </h2>
               <AccordionPanel textAlign="center" pb={4}>
-                {game.clock.slice(3) === "00:00" && game.period === 2 ? (
+                {isHalftime(game) ? (
                   <Text>Halftime</Text>
                 ) : (
                   <h3>
