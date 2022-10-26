@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>CFB Dashboard</title>
+        <title>CFB Now</title>
         <link
           rel="apple-touch-icon"
           sizes="180x180"
