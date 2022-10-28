@@ -25,14 +25,17 @@ const GamesList = () => {
   const [isLoaded, setIsLoaded] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
   const [gamesData, setGamesData] = useState([])
+  const [teamsData, setTeamsData] = useState([])
   const [search, setSearch] = useState("")
   const [tab, setTab] = useLocalStorage("now")
 
   useEffect(() => {
     axios.get("/api/api").then(
       (result) => {
+        console.log(result.data)
         setIsLoaded(true)
-        setGamesData(result.data)
+        setGamesData(result.data[0])
+        setTeamsData(result.data[1])
       },
       (error) => {
         setIsLoaded(true)
@@ -146,13 +149,25 @@ const GamesList = () => {
             isIndeterminate
           />
           {tab === "past" && (
-            <PastGames gamesData={gamesData} search={search} />
+            <PastGames
+              gamesData={gamesData}
+              teamsData={teamsData}
+              search={search}
+            />
           )}
           {tab === "now" && (
-            <ActiveGames gamesData={gamesData} search={search} />
+            <ActiveGames
+              gamesData={gamesData}
+              teamsData={teamsData}
+              search={search}
+            />
           )}
           {tab === "future" && (
-            <FutureGames gamesData={gamesData} search={search} />
+            <FutureGames
+              gamesData={gamesData}
+              teamsData={teamsData}
+              search={search}
+            />
           )}
           <Progress
             visibility={!refreshing && "hidden"}

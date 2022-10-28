@@ -7,10 +7,11 @@ import {
   VStack,
   Text,
   Divider,
+  Image,
 } from "@chakra-ui/react"
 import Moment from "react-moment"
 
-const PastGames = ({ gamesData, search }) => {
+const PastGames = ({ gamesData, teamsData, search }) => {
   return (
     <>
       {gamesData.map(
@@ -22,9 +23,26 @@ const PastGames = ({ gamesData, search }) => {
               <h2>
                 <AccordionButton>
                   <VStack w="100%">
-                    <Box w="100%" textAlign="center">
-                      Final
-                    </Box>
+                    <Flex w="100%" justify="space-between">
+                      <Image
+                        boxSize="30px"
+                        src={
+                          teamsData.find((team) => game.homeTeam.id === team.id)
+                            .logos[0]
+                        }
+                      />
+                      <Text w="100%" textAlign="center">
+                        Final
+                      </Text>
+                      <Image
+                        ml="auto"
+                        boxSize="30px"
+                        src={
+                          teamsData.find((team) => game.awayTeam.id === team.id)
+                            .logos[0]
+                        }
+                      />
+                    </Flex>
                     <Flex w="100%">
                       <Box textAlign="left" w="45%">
                         {game.homeTeam.name}

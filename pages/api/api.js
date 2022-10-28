@@ -1,7 +1,7 @@
 import axios from "axios"
 
 export default async (req, res) => {
-  const response = await axios.get(
+  const scoreboard = await axios.get(
     "https://api.collegefootballdata.com/scoreboard",
     {
       headers: {
@@ -9,5 +9,13 @@ export default async (req, res) => {
       },
     }
   )
-  res.status(200).json(response.data)
+  const teams = await axios.get(
+    "https://api.collegefootballdata.com/teams?year=2022",
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.CFBD_KEY}`,
+      },
+    }
+  )
+  res.status(200).json([[...scoreboard.data], [...teams.data]])
 }

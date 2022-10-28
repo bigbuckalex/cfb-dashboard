@@ -8,6 +8,7 @@ import {
   VStack,
   Text,
   Divider,
+  Image,
 } from "@chakra-ui/react"
 import { IoMdAmericanFootball } from "react-icons/io"
 
@@ -33,7 +34,7 @@ const isHalftime = (game) => {
   return game.clock.slice(3) === "00:00" && game.period === 2
 }
 
-const ActiveGames = ({ gamesData, search }) => {
+const ActiveGames = ({ gamesData, teamsData, search }) => {
   return (
     <>
       {gamesData.map(
@@ -47,6 +48,16 @@ const ActiveGames = ({ gamesData, search }) => {
                 <AccordionButton>
                   <VStack w="100%">
                     <Flex w="100%" justify="space-between">
+                      <Box>
+                        <Image
+                          boxSize="30px"
+                          src={
+                            teamsData.find(
+                              (team) => game.homeTeam.id === team.id
+                            ).logos[0]
+                          }
+                        />
+                      </Box>
                       <Icon
                         as={IoMdAmericanFootball}
                         visibility={
@@ -62,6 +73,17 @@ const ActiveGames = ({ gamesData, search }) => {
                           "hidden"
                         }
                       />
+                      <Box>
+                        <Image
+                          ml="auto"
+                          boxSize="30px"
+                          src={
+                            teamsData.find(
+                              (team) => game.awayTeam.id === team.id
+                            ).logos[0]
+                          }
+                        />
+                      </Box>
                     </Flex>
                     <Flex w="100%">
                       <Box textAlign="left" w="45%">

@@ -6,10 +6,12 @@ import {
   AccordionPanel,
   VStack,
   Text,
+  Image,
 } from "@chakra-ui/react"
 import Moment from "react-moment"
 
-const FutureGames = ({ gamesData, search }) => {
+const FutureGames = ({ gamesData, teamsData, search }) => {
+  console.log(teamsData)
   return (
     <>
       {gamesData.map(
@@ -21,9 +23,32 @@ const FutureGames = ({ gamesData, search }) => {
               <h2>
                 <AccordionButton>
                   <VStack w="100%">
-                    <Box w="100%" textAlign="center">
-                      {game.tv ?? "Not Broadcast"}
-                    </Box>
+                    <Flex w="100%">
+                      <Box w="45%">
+                        <Image
+                          boxSize="30px"
+                          src={
+                            teamsData.find(
+                              (team) => game.homeTeam.id === team.id
+                            ).logos[0]
+                          }
+                        />
+                      </Box>
+                      <Box w="30%" textAlign="center">
+                        {game.tv ?? "Not Broadcast"}
+                      </Box>
+                      <Box w="45%">
+                        <Image
+                          ml="auto"
+                          boxSize="30px"
+                          src={
+                            teamsData.find(
+                              (team) => game.awayTeam.id === team.id
+                            ).logos[0]
+                          }
+                        />
+                      </Box>
+                    </Flex>
                     <Flex w="100%">
                       <Box textAlign="left" w="45%">
                         {game.homeTeam.name}
