@@ -1,12 +1,11 @@
 import axios from "axios"
-import CFBD_KEY from "./key"
 
 export default async (req, res) => {
   const response = await axios.get(
     "https://api.collegefootballdata.com/scoreboard",
     {
       headers: {
-        Authorization: CFBD_KEY,
+        Authorization: `Bearer ${process.env.CFBD_KEY}`,
       },
     }
   )
