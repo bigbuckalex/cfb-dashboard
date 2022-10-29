@@ -27,7 +27,7 @@ const FutureGames = ({ gamesData, teamsData, search }) => {
                     <Flex w="100%">
                       <Box w="45%">
                         <Image
-                          boxSize="30px"
+                          boxSize="32px"
                           src={
                             teamsData.find(
                               (team) => game.homeTeam.id === team.id
@@ -41,7 +41,7 @@ const FutureGames = ({ gamesData, teamsData, search }) => {
                       <Box w="45%">
                         <Image
                           ml="auto"
-                          boxSize="30px"
+                          boxSize="32px"
                           src={
                             teamsData.find(
                               (team) => game.awayTeam.id === team.id

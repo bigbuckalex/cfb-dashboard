@@ -1,4 +1,5 @@
 import axios from "axios"
+import moment from "moment"
 
 export default async (req, res) => {
   const scoreboard = await axios.get(
@@ -10,7 +11,7 @@ export default async (req, res) => {
     }
   )
   const teams = await axios.get(
-    "https://api.collegefootballdata.com/teams?year=2022",
+    `https://api.collegefootballdata.com/teams?year=${moment().format("YYYY")}`,
     {
       headers: {
         Authorization: `Bearer ${process.env.CFBD_KEY}`,

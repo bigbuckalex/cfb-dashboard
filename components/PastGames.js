@@ -27,7 +27,7 @@ const PastGames = ({ gamesData, teamsData, search }) => {
                   <VStack w="100%">
                     <Flex w="100%" justify="space-between">
                       <Image
-                        boxSize="30px"
+                        boxSize="32px"
                         src={
                           teamsData.find((team) => game.homeTeam.id === team.id)
                             .logos[0]
@@ -38,7 +38,7 @@ const PastGames = ({ gamesData, teamsData, search }) => {
                       </Text>
                       <Image
                         ml="auto"
-                        boxSize="30px"
+                        boxSize="32px"
                         src={
                           teamsData.find((team) => game.awayTeam.id === team.id)
                             .logos[0]
