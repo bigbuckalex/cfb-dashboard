@@ -9,9 +9,9 @@ import {
   Image,
 } from "@chakra-ui/react"
 import Moment from "react-moment"
+import NaturalLanguageDay from "./NaturalLanguageDay"
 
 const FutureGames = ({ gamesData, teamsData, search }) => {
-  console.log(teamsData)
   return (
     <>
       {gamesData.map(
@@ -55,10 +55,8 @@ const FutureGames = ({ gamesData, teamsData, search }) => {
                       </Box>
                       <Box w="30%">
                         <Text>
-                          <Moment format="MM/DD" interval={0}>
-                            {game.startDate}
-                          </Moment>{" "}
-                          - Kickoff:{" "}
+                          <NaturalLanguageDay date={game.startDate} /> -
+                          Kickoff:{" "}
                           <Moment format="h:mma" interval={0}>
                             {game.startDate}
                           </Moment>

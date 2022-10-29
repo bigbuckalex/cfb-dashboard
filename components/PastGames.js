@@ -10,6 +10,8 @@ import {
   Image,
 } from "@chakra-ui/react"
 import Moment from "react-moment"
+import moment from "moment"
+import NaturalLanguageDay from "./NaturalLanguageDay"
 
 const PastGames = ({ gamesData, teamsData, search }) => {
   return (
@@ -59,10 +61,7 @@ const PastGames = ({ gamesData, teamsData, search }) => {
               </h2>
               <AccordionPanel textAlign="center" pb={4}>
                 <Text>
-                  <Moment format="MM/DD" interval={0}>
-                    {game.startDate}
-                  </Moment>{" "}
-                  - Kickoff:{" "}
+                  <NaturalLanguageDay date={game.startDate} /> - Kickoff:{" "}
                   <Moment format="h:mma" interval={0}>
                     {game.startDate}
                   </Moment>

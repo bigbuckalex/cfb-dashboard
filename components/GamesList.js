@@ -32,7 +32,6 @@ const GamesList = () => {
   useEffect(() => {
     axios.get("/api/api").then(
       (result) => {
-        console.log(result.data)
         setIsLoaded(true)
         setGamesData(result.data[0])
         setTeamsData(result.data[1])
