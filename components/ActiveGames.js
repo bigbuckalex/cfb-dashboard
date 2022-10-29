@@ -14,8 +14,9 @@ import {
 import { IoMdAmericanFootball } from "react-icons/io"
 
 const getFormattedPeriod = (period) => {
+  console.log(period)
   if (period > 4) {
-    return `OT${period - 4}`
+    return `${period - 4} OT`
   }
   if (period === 1) {
     return "1st Quarter"
@@ -106,7 +107,9 @@ const ActiveGames = ({ gamesData, teamsData, search }) => {
                   <Text>Halftime</Text>
                 ) : (
                   <h3>
-                    {game.clock.slice(3)} - {getFormattedPeriod(game.period)}
+                    {game.clock.slice(3)}
+                    {game.clock && " - "}
+                    {getFormattedPeriod(game.period)}
                   </h3>
                 )}
                 <Divider />
