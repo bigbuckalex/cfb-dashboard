@@ -56,8 +56,8 @@ const FutureGames = ({ gamesData, teamsData, search }) => {
                       </Box>
                       <Box w="30%">
                         <Text>
-                          <NaturalLanguageDay date={game.startDate} /> -
-                          Kickoff:{" "}
+                          <NaturalLanguageDay date={game.startDate} />
+                            {": "}
                           <Moment format="h:mma" interval={0}>
                             {game.startDate}
                           </Moment>
