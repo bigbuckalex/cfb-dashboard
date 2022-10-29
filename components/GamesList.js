@@ -48,16 +48,16 @@ const GamesList = () => {
     setRefreshing(true)
     axios.get("/api/api").then(
       (result) => {
-        setGamesData(result.data)
+        setGamesData(result.data[0])
         setTimeout(() => {
           setRefreshing(false)
-        }, 1500)
+        }, 1000)
       },
       (error) => {
         setError(error)
         setTimeout(() => {
           setRefreshing(false)
-        }, 1500)
+        }, 1000)
       }
     )
   }
