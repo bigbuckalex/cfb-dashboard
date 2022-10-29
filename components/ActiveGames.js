@@ -9,6 +9,7 @@ import {
   Text,
   Divider,
   Image,
+  Badge,
 } from "@chakra-ui/react"
 import { IoMdAmericanFootball } from "react-icons/io"
 
@@ -40,7 +41,6 @@ const ActiveGames = ({ gamesData, teamsData, search }) => {
       {gamesData.map(
         (game) =>
           game.status === "in_progress" &&
-          game.tv &&
           (game.homeTeam.name.toLowerCase().includes(search) ||
             game.awayTeam.name.toLowerCase().includes(search)) && (
             <AccordionItem key={game.id}>
@@ -65,7 +65,9 @@ const ActiveGames = ({ gamesData, teamsData, search }) => {
                           "hidden"
                         }
                       />
-                      <Box>{game.tv}</Box>
+                      <Box>
+                        <Badge>{game.tv}</Badge>
+                      </Box>
                       <Icon
                         as={IoMdAmericanFootball}
                         visibility={

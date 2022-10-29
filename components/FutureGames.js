@@ -7,6 +7,7 @@ import {
   VStack,
   Text,
   Image,
+  Badge,
 } from "@chakra-ui/react"
 import Moment from "react-moment"
 import NaturalLanguageDay from "./NaturalLanguageDay"
@@ -35,7 +36,7 @@ const FutureGames = ({ gamesData, teamsData, search }) => {
                         />
                       </Box>
                       <Box w="30%" textAlign="center">
-                        {game.tv ?? "Not Broadcast"}
+                        <Badge>{game.tv}</Badge>
                       </Box>
                       <Box w="45%">
                         <Image
