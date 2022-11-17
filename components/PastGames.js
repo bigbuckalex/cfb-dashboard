@@ -57,30 +57,46 @@ const PastGames = ({
                     </Flex>
                     <Flex w="100%">
                       <Box textAlign="left" w="45%">
-                        <Badge mb={1} mr={1}>
-                          {rankingsData.ranks.find(
-                            (ranking) =>
-                              ranking.school ===
-                              teamsData.find(
-                                (team) => game.homeTeam.id === team.id
-                              ).school
-                          )?.rank ?? ""}
-                        </Badge>
+                        {rankingsData.ranks.find(
+                          (ranking) =>
+                            ranking.school ===
+                            teamsData.find(
+                              (team) => game.homeTeam.id === team.id
+                            ).school
+                        ) && (
+                          <Badge mb={1} mr={1}>
+                            {rankingsData.ranks.find(
+                              (ranking) =>
+                                ranking.school ===
+                                teamsData.find(
+                                  (team) => game.homeTeam.id === team.id
+                                ).school
+                            )?.rank ?? ""}
+                          </Badge>
+                        )}
                         {game.homeTeam.name}
                       </Box>
                       <Box w="30%">
                         {game.homeTeam.points}-{game.awayTeam.points}{" "}
                       </Box>
                       <Box textAlign="right" w="45%">
-                        <Badge mb={1} mr={1}>
-                          {rankingsData.ranks.find(
-                            (ranking) =>
-                              ranking.school ===
-                              teamsData.find(
-                                (team) => game.awayTeam.id === team.id
-                              ).school
-                          )?.rank ?? ""}
-                        </Badge>
+                        {rankingsData.ranks.find(
+                          (ranking) =>
+                            ranking.school ===
+                            teamsData.find(
+                              (team) => game.awayTeam.id === team.id
+                            ).school
+                        ) && (
+                          <Badge mb={1} mr={1}>
+                            {rankingsData.ranks.find(
+                              (ranking) =>
+                                ranking.school ===
+                                teamsData.find(
+                                  (team) => game.awayTeam.id === team.id
+                                ).school
+                            )?.rank ?? ""}
+                          </Badge>
+                        )}
                         {game.awayTeam.name}
                       </Box>
                     </Flex>
