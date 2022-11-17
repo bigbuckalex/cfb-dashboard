@@ -36,7 +36,7 @@ const isHalftime = (game) => {
   return game.clock.slice(3) === "00:00" && game.period === 2
 }
 
-const ActiveGames = ({ gamesData, teamsData, search }) => {
+const ActiveGames = ({ gamesData, teamsData, rankingsData, search }) => {
   return (
     <>
       {gamesData.map(
@@ -51,6 +51,7 @@ const ActiveGames = ({ gamesData, teamsData, search }) => {
                     <Flex w="100%" justify="space-between">
                       <Box>
                         <Image
+                          alt="Home Team"
                           boxSize="32px"
                           src={
                             teamsData.find(
@@ -67,7 +68,7 @@ const ActiveGames = ({ gamesData, teamsData, search }) => {
                         }
                       />
                       <Box>
-                        <Badge>{game.tv}</Badge>
+                        <Badge variant="outline">{game.tv}</Badge>
                       </Box>
                       <Icon
                         as={IoMdAmericanFootball}
@@ -78,6 +79,7 @@ const ActiveGames = ({ gamesData, teamsData, search }) => {
                       />
                       <Box>
                         <Image
+                          alt="Away Team"
                           ml="auto"
                           boxSize="32px"
                           src={
@@ -90,12 +92,30 @@ const ActiveGames = ({ gamesData, teamsData, search }) => {
                     </Flex>
                     <Flex w="100%">
                       <Box textAlign="left" w="45%">
+                        <Badge mb={1} mr={1}>
+                          {rankingsData.ranks.find(
+                            (ranking) =>
+                              ranking.school ===
+                              teamsData.find(
+                                (team) => game.homeTeam.id === team.id
+                              ).school
+                          )?.rank ?? ""}
+                        </Badge>
                         {game.homeTeam.name}
                       </Box>
                       <Box w="30%">
                         {game.homeTeam.points}-{game.awayTeam.points}{" "}
                       </Box>
                       <Box textAlign="right" w="45%">
+                        <Badge mb={1} mr={1}>
+                          {rankingsData.ranks.find(
+                            (ranking) =>
+                              ranking.school ===
+                              teamsData.find(
+                                (team) => game.awayTeam.id === team.id
+                              ).school
+                          )?.rank ?? ""}
+                        </Badge>
                         {game.awayTeam.name}
                       </Box>
                     </Flex>

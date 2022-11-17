@@ -1,6 +1,7 @@
 import axios from "axios"
 import moment from "moment"
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default async (req, res) => {
   const scoreboard = await axios.get(
     "https://api.collegefootballdata.com/scoreboard",
@@ -18,5 +19,17 @@ export default async (req, res) => {
       },
     }
   )
-  res.status(200).json([[...scoreboard.data], [...teams.data]])
+  const rankings = await axios.get(
+    `https://api.collegefootballdata.com/rankings?year=${moment().format(
+      "YYYY"
+    )}&seasonType=regular`,
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.CFBD_KEY}`,
+      },
+    }
+  )
+  res
+    .status(200)
+    .json([[...scoreboard.data], [...teams.data], [...rankings.data]])
 }

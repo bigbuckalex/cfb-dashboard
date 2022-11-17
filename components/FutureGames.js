@@ -12,7 +12,7 @@ import {
 import Moment from "react-moment"
 import NaturalLanguageDay from "./NaturalLanguageDay"
 
-const FutureGames = ({ gamesData, teamsData, search }) => {
+const FutureGames = ({ gamesData, teamsData, rankingsData, search }) => {
   return (
     <>
       {gamesData.map(
@@ -27,6 +27,7 @@ const FutureGames = ({ gamesData, teamsData, search }) => {
                     <Flex w="100%">
                       <Box w="45%">
                         <Image
+                          alt="Home Team"
                           boxSize="32px"
                           src={
                             teamsData.find(
@@ -36,10 +37,11 @@ const FutureGames = ({ gamesData, teamsData, search }) => {
                         />
                       </Box>
                       <Box w="30%" textAlign="center">
-                        <Badge>{game.tv}</Badge>
+                        <Badge variant="outline">{game.tv}</Badge>
                       </Box>
                       <Box w="45%">
                         <Image
+                          alt="Away Team"
                           ml="auto"
                           boxSize="32px"
                           src={
@@ -52,18 +54,36 @@ const FutureGames = ({ gamesData, teamsData, search }) => {
                     </Flex>
                     <Flex w="100%">
                       <Box textAlign="left" w="45%">
+                        <Badge mb={1} mr={1}>
+                          {rankingsData.ranks.find(
+                            (ranking) =>
+                              ranking.school ===
+                              teamsData.find(
+                                (team) => game.homeTeam.id === team.id
+                              ).school
+                          )?.rank ?? ""}
+                        </Badge>
                         {game.homeTeam.name}
                       </Box>
                       <Box w="30%">
                         <Text>
                           <NaturalLanguageDay date={game.startDate} />
-                            {": "}
+                          {": "}
                           <Moment format="h:mma" interval={0}>
                             {game.startDate}
                           </Moment>
                         </Text>
                       </Box>
                       <Box textAlign="right" w="45%">
+                        <Badge mb={1} mr={1}>
+                          {rankingsData.ranks.find(
+                            (ranking) =>
+                              ranking.school ===
+                              teamsData.find(
+                                (team) => game.awayTeam.id === team.id
+                              ).school
+                          )?.rank ?? ""}
+                        </Badge>
                         {game.awayTeam.name}
                       </Box>
                     </Flex>

@@ -26,6 +26,7 @@ const GamesList = () => {
   const [refreshing, setRefreshing] = useState(false)
   const [gamesData, setGamesData] = useState([])
   const [teamsData, setTeamsData] = useState([])
+  const [rankingsData, setRankingsData] = useState([])
   const [search, setSearch] = useState("")
   const [tab, setTab] = useLocalStorage("now")
 
@@ -35,6 +36,11 @@ const GamesList = () => {
         setIsLoaded(true)
         setGamesData(result.data[0])
         setTeamsData(result.data[1])
+        setRankingsData(
+          result.data[2][result.data[2].length - 1].polls.find(
+            (e) => e.poll === "Playoff Committee Rankings"
+          )
+        )
       },
       (error) => {
         setIsLoaded(true)
@@ -48,6 +54,11 @@ const GamesList = () => {
     axios.get("/api/api").then(
       (result) => {
         setGamesData(result.data[0])
+        setRankingsData(
+          result.data[2][result.data[2].length - 1].polls.find(
+            (e) => e.poll === "Playoff Committee Rankings"
+          )
+        )
         setTimeout(() => {
           setRefreshing(false)
         }, 1000)
@@ -151,6 +162,7 @@ const GamesList = () => {
             <PastGames
               gamesData={gamesData}
               teamsData={teamsData}
+              rankingsData={rankingsData}
               search={search}
             />
           )}
@@ -158,6 +170,7 @@ const GamesList = () => {
             <ActiveGames
               gamesData={gamesData}
               teamsData={teamsData}
+              rankingsData={rankingsData}
               search={search}
             />
           )}
@@ -165,6 +178,7 @@ const GamesList = () => {
             <FutureGames
               gamesData={gamesData}
               teamsData={teamsData}
+              rankingsData={rankingsData}
               search={search}
             />
           )}

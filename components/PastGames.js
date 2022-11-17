@@ -8,12 +8,14 @@ import {
   Text,
   Divider,
   Image,
+  Badge,
 } from "@chakra-ui/react"
 import Moment from "react-moment"
 import moment from "moment"
 import NaturalLanguageDay from "./NaturalLanguageDay"
 
-const PastGames = ({ gamesData, teamsData, search }) => {
+const PastGames = ({ gamesData, teamsData, rankingsData, search }) => {
+  console.log(rankingsData)
   return (
     <>
       {gamesData.map(
@@ -27,6 +29,7 @@ const PastGames = ({ gamesData, teamsData, search }) => {
                   <VStack w="100%">
                     <Flex w="100%" justify="space-between">
                       <Image
+                        alt="Home Team"
                         boxSize="32px"
                         src={
                           teamsData.find((team) => game.homeTeam.id === team.id)
@@ -37,6 +40,7 @@ const PastGames = ({ gamesData, teamsData, search }) => {
                         Final
                       </Text>
                       <Image
+                        alt="Away Team"
                         ml="auto"
                         boxSize="32px"
                         src={
@@ -47,12 +51,30 @@ const PastGames = ({ gamesData, teamsData, search }) => {
                     </Flex>
                     <Flex w="100%">
                       <Box textAlign="left" w="45%">
+                        <Badge mb={1} mr={1}>
+                          {rankingsData.ranks.find(
+                            (ranking) =>
+                              ranking.school ===
+                              teamsData.find(
+                                (team) => game.homeTeam.id === team.id
+                              ).school
+                          )?.rank ?? ""}
+                        </Badge>
                         {game.homeTeam.name}
                       </Box>
                       <Box w="30%">
                         {game.homeTeam.points}-{game.awayTeam.points}{" "}
                       </Box>
                       <Box textAlign="right" w="45%">
+                        <Badge mb={1} mr={1}>
+                          {rankingsData.ranks.find(
+                            (ranking) =>
+                              ranking.school ===
+                              teamsData.find(
+                                (team) => game.awayTeam.id === team.id
+                              ).school
+                          )?.rank ?? ""}
+                        </Badge>
                         {game.awayTeam.name}
                       </Box>
                     </Flex>
