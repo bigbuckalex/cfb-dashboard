@@ -12,12 +12,19 @@ import {
 import Moment from "react-moment"
 import NaturalLanguageDay from "./NaturalLanguageDay"
 
-const FutureGames = ({ gamesData, teamsData, rankingsData, search }) => {
+const FutureGames = ({
+  gamesData,
+  teamsData,
+  rankingsData,
+  search,
+  tvGamesOnly,
+}) => {
   return (
     <>
       {gamesData.map(
         (game) =>
           game.status === "scheduled" &&
+          (game.tv || tvGamesOnly === "false") &&
           (game.homeTeam.name.toLowerCase().includes(search) ||
             game.awayTeam.name.toLowerCase().includes(search)) && (
             <AccordionItem key={game.id}>

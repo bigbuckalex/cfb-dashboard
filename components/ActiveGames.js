@@ -36,12 +36,19 @@ const isHalftime = (game) => {
   return game.clock.slice(3) === "00:00" && game.period === 2
 }
 
-const ActiveGames = ({ gamesData, teamsData, rankingsData, search }) => {
+const ActiveGames = ({
+  gamesData,
+  teamsData,
+  rankingsData,
+  search,
+  tvGamesOnly,
+}) => {
   return (
     <>
       {gamesData.map(
         (game) =>
           game.status === "in_progress" &&
+          (game.tv || tvGamesOnly === "false") &&
           (game.homeTeam.name.toLowerCase().includes(search) ||
             game.awayTeam.name.toLowerCase().includes(search)) && (
             <AccordionItem key={game.id}>

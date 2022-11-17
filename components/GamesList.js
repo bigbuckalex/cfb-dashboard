@@ -13,6 +13,8 @@ import {
   InputGroup,
   InputRightElement,
   Progress,
+  Switch,
+  Text,
 } from "@chakra-ui/react"
 import { IoMdRefresh } from "react-icons/io"
 import PastGames from "./PastGames"
@@ -28,7 +30,8 @@ const GamesList = () => {
   const [teamsData, setTeamsData] = useState([])
   const [rankingsData, setRankingsData] = useState([])
   const [search, setSearch] = useState("")
-  const [tab, setTab] = useLocalStorage("now")
+  const [tab, setTab] = useLocalStorage("tab", "now")
+  const [tvGamesOnly, setTvGamesOnly] = useLocalStorage("tvGamesOnly", "false")
 
   useEffect(() => {
     axios.get("/api/api").then(
@@ -140,6 +143,16 @@ const GamesList = () => {
                 </Button>
               </InputRightElement>
             </InputGroup>
+            <Switch
+              ml={4}
+              mb={4}
+              isChecked={tvGamesOnly === "true"}
+              onChange={() =>
+                setTvGamesOnly(tvGamesOnly === "true" ? "false" : "true")
+              }
+            >
+              Televised games only?
+            </Switch>
           </AccordionItem>
           <AccordionItem>
             <h2>
@@ -164,6 +177,7 @@ const GamesList = () => {
               teamsData={teamsData}
               rankingsData={rankingsData}
               search={search}
+              tvGamesOnly={tvGamesOnly}
             />
           )}
           {tab === "now" && (
@@ -172,6 +186,7 @@ const GamesList = () => {
               teamsData={teamsData}
               rankingsData={rankingsData}
               search={search}
+              tvGamesOnly={tvGamesOnly}
             />
           )}
           {tab === "future" && (
@@ -180,6 +195,7 @@ const GamesList = () => {
               teamsData={teamsData}
               rankingsData={rankingsData}
               search={search}
+              tvGamesOnly={tvGamesOnly}
             />
           )}
           <Progress
