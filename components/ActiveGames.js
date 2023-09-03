@@ -43,7 +43,11 @@ const ActiveGames = ({
   search,
   tvGamesOnly,
 }) => {
-  return (
+  console.log(gamesData.map((game) => game.status === "in_progress"))
+  if (gamesData.find((game) => game.status === "in_progress") === undefined) return (
+    <Text align='center'>There are no FBS college football games on right now :(</Text>
+  )
+  else return (
     <>
       {gamesData.map(
         (game) =>
@@ -106,16 +110,16 @@ const ActiveGames = ({
                               (team) => game.homeTeam.id === team.id
                             ).school
                         ) && (
-                          <Badge mb={1} mr={1}>
-                            {rankingsData.ranks.find(
-                              (ranking) =>
-                                ranking.school ===
-                                teamsData.find(
-                                  (team) => game.homeTeam.id === team.id
-                                ).school
-                            )?.rank ?? ""}
-                          </Badge>
-                        )}
+                            <Badge mb={1} mr={1}>
+                              {rankingsData.ranks.find(
+                                (ranking) =>
+                                  ranking.school ===
+                                  teamsData.find(
+                                    (team) => game.homeTeam.id === team.id
+                                  ).school
+                              )?.rank ?? ""}
+                            </Badge>
+                          )}
                         {game.homeTeam.name}
                       </Box>
                       <Box w="30%">
@@ -129,16 +133,16 @@ const ActiveGames = ({
                               (team) => game.awayTeam.id === team.id
                             ).school
                         ) && (
-                          <Badge mb={1} mr={1}>
-                            {rankingsData.ranks.find(
-                              (ranking) =>
-                                ranking.school ===
-                                teamsData.find(
-                                  (team) => game.awayTeam.id === team.id
-                                ).school
-                            )?.rank ?? ""}
-                          </Badge>
-                        )}
+                            <Badge mb={1} mr={1}>
+                              {rankingsData.ranks.find(
+                                (ranking) =>
+                                  ranking.school ===
+                                  teamsData.find(
+                                    (team) => game.awayTeam.id === team.id
+                                  ).school
+                              )?.rank ?? ""}
+                            </Badge>
+                          )}
                         {game.awayTeam.name}
                       </Box>
                     </Flex>

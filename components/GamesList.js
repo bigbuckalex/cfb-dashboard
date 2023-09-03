@@ -40,8 +40,8 @@ const GamesList = () => {
         setGamesData(result.data[0])
         setTeamsData(result.data[1])
         setRankingsData(
-          result.data[2][result.data[2].length - 1].polls.find(
-            (e) => e.poll === "Playoff Committee Rankings"
+          result.data[2][result.data[2].length - 1].polls.findLast(
+            (e) => e.poll === "Playoff Committee Rankings" || e.poll === "AP Top 25"
           )
         )
       },
@@ -58,8 +58,8 @@ const GamesList = () => {
       (result) => {
         setGamesData(result.data[0])
         setRankingsData(
-          result.data[2][result.data[2].length - 1].polls.find(
-            (e) => e.poll === "Playoff Committee Rankings"
+          result.data[2][result.data[2].length - 1].polls.findLast(
+            (e) => e.poll === "Playoff Committee Rankings" || e.poll === "AP Top 25"
           )
         )
         setTimeout(() => {
