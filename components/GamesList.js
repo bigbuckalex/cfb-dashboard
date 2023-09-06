@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react"
-import axios from "axios"
+import { useState, useEffect } from "react";
+import axios from "axios";
 import {
   Flex,
   Box,
+  Text,
   Accordion,
   AccordionItem,
   IconButton,
@@ -14,78 +15,92 @@ import {
   InputRightElement,
   Progress,
   Switch,
-} from "@chakra-ui/react"
-import { IoMdRefresh } from "react-icons/io"
-import PastGames from "./PastGames"
-import ActiveGames from "./ActiveGames"
-import FutureGames from "./FutureGames"
-import useLocalStorage from "../hooks/useLocalStorage"
+} from "@chakra-ui/react";
+import { IoMdRefresh } from "react-icons/io";
+import PastGames from "./PastGames";
+import ActiveGames from "./ActiveGames";
+import FutureGames from "./FutureGames";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 const GamesList = () => {
-  const [error, setError] = useState(null)
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [refreshing, setRefreshing] = useState(false)
-  const [gamesData, setGamesData] = useState([])
-  const [teamsData, setTeamsData] = useState([])
-  const [rankingsData, setRankingsData] = useState([])
-  const [search, setSearch] = useState("")
-  const [tab, setTab] = useLocalStorage("tab", "now")
-  const [tvGamesOnly, setTvGamesOnly] = useLocalStorage("tvGamesOnly", "false")
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const [gamesData, setGamesData] = useState([]);
+  const [teamsData, setTeamsData] = useState([]);
+  const [rankingsData, setRankingsData] = useState([]);
+  const [search, setSearch] = useState("");
+  const [tab, setTab] = useLocalStorage("tab", "now");
+  const [tvGamesOnly, setTvGamesOnly] = useLocalStorage("tvGamesOnly", "false");
 
   useEffect(() => {
     axios.get("/api/api").then(
       (result) => {
-        setIsLoaded(true)
-        setGamesData(result.data[0])
-        setTeamsData(result.data[1])
+        setIsLoaded(true);
+        setGamesData(result.data[0]);
+        setTeamsData(result.data[1]);
         setRankingsData(
           result.data[2][result.data[2].length - 1].polls.findLast(
-            (e) => e.poll === "Playoff Committee Rankings" || e.poll === "AP Top 25"
+            (e) =>
+              e.poll === "Playoff Committee Rankings" || e.poll === "AP Top 25"
           )
-        )
+        );
       },
       (error) => {
-        setIsLoaded(true)
-        setError(error)
+        setIsLoaded(true);
+        setError(error);
       }
-    )
-  }, [])
+    );
+  }, []);
 
   const refresh = () => {
-    setRefreshing(true)
+    setRefreshing(true);
     axios.get("/api/api").then(
       (result) => {
-        setGamesData(result.data[0])
+        setGamesData(result.data[0]);
         setRankingsData(
           result.data[2][result.data[2].length - 1].polls.findLast(
-            (e) => e.poll === "Playoff Committee Rankings" || e.poll === "AP Top 25"
+            (e) =>
+              e.poll === "Playoff Committee Rankings" || e.poll === "AP Top 25"
           )
-        )
+        );
         setTimeout(() => {
-          setRefreshing(false)
-        }, 1000)
+          setRefreshing(false);
+        }, 1000);
       },
       (error) => {
-        setError(error)
+        setError(error);
         setTimeout(() => {
-          setRefreshing(false)
-        }, 1000)
+          setRefreshing(false);
+        }, 1000);
       }
-    )
-  }
+    );
+  };
 
   const clearSearch = () => {
-    setSearch("")
-  }
+    setSearch("");
+  };
+
+  const returnPlaceholder = (tab) => {
+    if (tab === "past") {
+      return "Search past games by team";
+    }
+    if (tab === "now") {
+      return "Search games on now by team";
+    }
+    if (tab === "future") {
+      return "Search future games by team";
+    }
+  };
 
   if (error) {
-    return <div>Error: {error.message}</div>
+    return <div>Error: {error.message}</div>;
   } else if (!isLoaded) {
     return (
       <Center h="100vh">
         <Spinner color="blue.500" size="xl" />
       </Center>
-    )
+    );
   } else {
     return (
       <>
@@ -96,8 +111,8 @@ const GamesList = () => {
                 <Button
                   variant={tab === "past" ? "solid" : "outline"}
                   onClick={() => {
-                    clearSearch()
-                    setTab("past")
+                    clearSearch();
+                    setTab("past");
                   }}
                   w="32%"
                 >
@@ -106,8 +121,8 @@ const GamesList = () => {
                 <Button
                   variant={tab === "now" ? "solid" : "outline"}
                   onClick={() => {
-                    setTab("now")
-                    clearSearch()
+                    setTab("now");
+                    clearSearch();
                   }}
                   w="32%"
                 >
@@ -116,8 +131,8 @@ const GamesList = () => {
                 <Button
                   variant={tab === "future" ? "solid" : "outline"}
                   onClick={() => {
-                    setTab("future")
-                    clearSearch()
+                    setTab("future");
+                    clearSearch();
                   }}
                   w="32%"
                 >
@@ -134,7 +149,7 @@ const GamesList = () => {
                 w="calc(100% - 2rem)"
                 m={4}
                 pr="4.5rem"
-                placeholder="Search by team"
+                placeholder={returnPlaceholder(tab)}
               />
               <InputRightElement width="6.5rem">
                 <Button mt="2rem" h="1.75rem" size="sm" onClick={clearSearch}>
@@ -157,10 +172,13 @@ const GamesList = () => {
             <h2>
               <Flex p={4} w="100%" justify="space-between">
                 <Flex textAlign="left" direction="column">
-                  <Box>Home</Box>
+                  <Text>Away</Text>
+                </Flex>
+                <Flex textAlign="center">
+                  <Text>@</Text>
                 </Flex>
                 <Flex textAlign="right" direction="column">
-                  <Box>Away</Box>
+                  <Text>Home</Text>
                 </Flex>
               </Flex>
             </h2>
@@ -215,8 +233,8 @@ const GamesList = () => {
           </AccordionItem>
         </Accordion>
       </>
-    )
+    );
   }
-}
+};
 
-export default GamesList
+export default GamesList;

@@ -10,9 +10,9 @@ import {
   Image,
   Badge,
   SkeletonCircle,
-} from "@chakra-ui/react"
-import Moment from "react-moment"
-import NaturalLanguageDay from "./NaturalLanguageDay"
+} from "@chakra-ui/react";
+import Moment from "react-moment";
+import NaturalLanguageDay from "./NaturalLanguageDay";
 
 const PastGames = ({
   gamesData,
@@ -35,11 +35,11 @@ const PastGames = ({
                   <VStack w="100%">
                     <Flex w="100%" justify="space-between">
                       <Image
-                        alt="Home Team"
+                        alt="Away Team"
                         boxSize="32px"
-                        fallback={<SkeletonCircle />}
+                        fallback={<SkeletonCircle ml="auto" />}
                         src={
-                          teamsData.find((team) => game.homeTeam.id === team.id)
+                          teamsData.find((team) => game.awayTeam.id === team.id)
                             .logos[0]
                         }
                       />
@@ -47,41 +47,18 @@ const PastGames = ({
                         Final
                       </Text>
                       <Image
-                        alt="Away Team"
+                        alt="Home Team"
                         ml="auto"
                         boxSize="32px"
-                        fallback={<SkeletonCircle ml="auto"/>}
+                        fallback={<SkeletonCircle />}
                         src={
-                          teamsData.find((team) => game.awayTeam.id === team.id)
+                          teamsData.find((team) => game.homeTeam.id === team.id)
                             .logos[0]
                         }
                       />
                     </Flex>
                     <Flex w="100%">
                       <Box textAlign="left" w="45%">
-                        {rankingsData.ranks.find(
-                          (ranking) =>
-                            ranking.school ===
-                            teamsData.find(
-                              (team) => game.homeTeam.id === team.id
-                            ).school
-                        ) && (
-                          <Badge mb={1} mr={1}>
-                            {rankingsData.ranks.find(
-                              (ranking) =>
-                                ranking.school ===
-                                teamsData.find(
-                                  (team) => game.homeTeam.id === team.id
-                                ).school
-                            )?.rank ?? ""}
-                          </Badge>
-                        )}
-                        {game.homeTeam.name}
-                      </Box>
-                      <Box w="30%">
-                        {game.homeTeam.points}-{game.awayTeam.points}{" "}
-                      </Box>
-                      <Box textAlign="right" w="45%">
                         {rankingsData.ranks.find(
                           (ranking) =>
                             ranking.school ===
@@ -101,6 +78,29 @@ const PastGames = ({
                         )}
                         {game.awayTeam.name}
                       </Box>
+                      <Box w="30%">
+                        {game.awayTeam.points}-{game.homeTeam.points}{" "}
+                      </Box>
+                      <Box textAlign="right" w="45%">
+                        {rankingsData.ranks.find(
+                          (ranking) =>
+                            ranking.school ===
+                            teamsData.find(
+                              (team) => game.homeTeam.id === team.id
+                            ).school
+                        ) && (
+                          <Badge mb={1} mr={1}>
+                            {rankingsData.ranks.find(
+                              (ranking) =>
+                                ranking.school ===
+                                teamsData.find(
+                                  (team) => game.homeTeam.id === team.id
+                                ).school
+                            )?.rank ?? ""}
+                          </Badge>
+                        )}
+                        {game.homeTeam.name}
+                      </Box>
                     </Flex>
                   </VStack>
                 </AccordionButton>
@@ -119,7 +119,7 @@ const PastGames = ({
           )
       )}
     </>
-  )
-}
+  );
+};
 
-export default PastGames
+export default PastGames;

@@ -9,9 +9,9 @@ import {
   Image,
   Badge,
   SkeletonCircle,
-} from "@chakra-ui/react"
-import Moment from "react-moment"
-import NaturalLanguageDay from "./NaturalLanguageDay"
+} from "@chakra-ui/react";
+import Moment from "react-moment";
+import NaturalLanguageDay from "./NaturalLanguageDay";
 
 const FutureGames = ({
   gamesData,
@@ -35,23 +35,7 @@ const FutureGames = ({
                     <Flex w="100%">
                       <Box w="45%">
                         <Image
-                          alt="Home Team"
-                          boxSize="32px"
-                          fallback={<SkeletonCircle />}
-                          src={
-                            teamsData.find(
-                              (team) => game.homeTeam.id === team.id
-                            ).logos[0]
-                          }
-                        />
-                      </Box>
-                      <Box w="30%" textAlign="center">
-                        <Badge variant="outline">{game.tv}</Badge>
-                      </Box>
-                      <Box w="45%">
-                        <Image
                           alt="Away Team"
-                          ml="auto"
                           boxSize="32px"
                           fallback={<SkeletonCircle ml="auto" />}
                           src={
@@ -61,9 +45,54 @@ const FutureGames = ({
                           }
                         />
                       </Box>
+                      <Box w="30%" textAlign="center">
+                        <Badge variant="outline">{game.tv}</Badge>
+                      </Box>
+                      <Box w="45%">
+                        <Image
+                          alt="Home Team"
+                          ml="auto"
+                          boxSize="32px"
+                          fallback={<SkeletonCircle />}
+                          src={
+                            teamsData.find(
+                              (team) => game.homeTeam.id === team.id
+                            ).logos[0]
+                          }
+                        />
+                      </Box>
                     </Flex>
                     <Flex w="100%">
                       <Box textAlign="left" w="45%">
+                        {rankingsData.ranks.find(
+                          (ranking) =>
+                            ranking.school ===
+                            teamsData.find(
+                              (team) => game.awayTeam.id === team.id
+                            ).school
+                        ) && (
+                          <Badge mb={1} mr={1}>
+                            {rankingsData.ranks.find(
+                              (ranking) =>
+                                ranking.school ===
+                                teamsData.find(
+                                  (team) => game.awayTeam.id === team.id
+                                ).school
+                            )?.rank ?? ""}
+                          </Badge>
+                        )}
+                        {game.awayTeam.name}
+                      </Box>
+                      <Box w="30%">
+                        <Text>
+                          <NaturalLanguageDay date={game.startDate} />
+                          {": "}
+                          <Moment format="h:mma" interval={0}>
+                            {game.startDate}
+                          </Moment>
+                        </Text>
+                      </Box>
+                      <Box textAlign="right" w="45%">
                         {rankingsData.ranks.find(
                           (ranking) =>
                             ranking.school ===
@@ -85,35 +114,6 @@ const FutureGames = ({
                         )}
                         {game.homeTeam.name}
                       </Box>
-                      <Box w="30%">
-                        <Text>
-                          <NaturalLanguageDay date={game.startDate} />
-                          {": "}
-                          <Moment format="h:mma" interval={0}>
-                            {game.startDate}
-                          </Moment>
-                        </Text>
-                      </Box>
-                      <Box textAlign="right" w="45%">
-                        {rankingsData.ranks.find(
-                          (ranking) =>
-                            ranking.school ===
-                            teamsData.find(
-                              (team) => game.awayTeam.id === team.id
-                            ).school
-                        ) && (
-                          <Badge mb={1} mr={1}>
-                            {rankingsData.ranks.find(
-                              (ranking) =>
-                                ranking.school ===
-                                teamsData.find(
-                                  (team) => game.awayTeam.id === team.id
-                                ).school
-                            )?.rank ?? ""}
-                          </Badge>
-                        )}
-                        {game.awayTeam.name}
-                      </Box>
                     </Flex>
                   </VStack>
                 </AccordionButton>
@@ -125,7 +125,7 @@ const FutureGames = ({
           )
       )}
     </>
-  )
-}
+  );
+};
 
-export default FutureGames
+export default FutureGames;

@@ -1,6 +1,6 @@
-import Head from "next/head"
-import { VStack } from "@chakra-ui/react"
-import GamesList from "../components/GamesList"
+import Head from "next/head";
+import { VStack } from "@chakra-ui/react";
+import GamesList from "../components/GamesList";
 
 export default function Home() {
   return (
@@ -30,5 +30,5 @@ export default function Home() {
         <GamesList />
       </VStack>
     </>
-  )
+  );
 }
