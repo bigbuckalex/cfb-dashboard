@@ -8,6 +8,7 @@ import {
   Text,
   Image,
   Badge,
+  SkeletonCircle,
 } from "@chakra-ui/react"
 import Moment from "react-moment"
 import NaturalLanguageDay from "./NaturalLanguageDay"
@@ -36,6 +37,7 @@ const FutureGames = ({
                         <Image
                           alt="Home Team"
                           boxSize="32px"
+                          fallback={<SkeletonCircle />}
                           src={
                             teamsData.find(
                               (team) => game.homeTeam.id === team.id
@@ -51,6 +53,7 @@ const FutureGames = ({
                           alt="Away Team"
                           ml="auto"
                           boxSize="32px"
+                          fallback={<SkeletonCircle ml="auto" />}
                           src={
                             teamsData.find(
                               (team) => game.awayTeam.id === team.id

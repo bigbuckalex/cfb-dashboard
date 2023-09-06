@@ -10,6 +10,7 @@ import {
   Divider,
   Image,
   Badge,
+  SkeletonCircle,
 } from "@chakra-ui/react"
 import { IoMdAmericanFootball } from "react-icons/io"
 
@@ -64,6 +65,7 @@ const ActiveGames = ({
                         <Image
                           alt="Home Team"
                           boxSize="32px"
+                          fallback={<SkeletonCircle />}
                           src={
                             teamsData.find(
                               (team) => game.homeTeam.id === team.id
@@ -93,6 +95,7 @@ const ActiveGames = ({
                           alt="Away Team"
                           ml="auto"
                           boxSize="32px"
+                          fallback={<SkeletonCircle ml="auto"/>}
                           src={
                             teamsData.find(
                               (team) => game.awayTeam.id === team.id
