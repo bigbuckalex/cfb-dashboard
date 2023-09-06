@@ -69,7 +69,7 @@ const ActiveGames = ({
                           <Image
                             alt="Away Team"
                             boxSize="32px"
-                            fallback={<SkeletonCircle ml="auto" />}
+                            fallback={<SkeletonCircle />}
                             src={
                               teamsData.find(
                                 (team) => game.awayTeam.id === team.id
@@ -99,7 +99,7 @@ const ActiveGames = ({
                             alt="Home Team"
                             boxSize="32px"
                             ml="auto"
-                            fallback={<SkeletonCircle />}
+                            fallback={<SkeletonCircle ml="auto" />}
                             src={
                               teamsData.find(
                                 (team) => game.homeTeam.id === team.id
