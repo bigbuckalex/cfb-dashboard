@@ -95,7 +95,7 @@ const ActiveGames = ({
                           alt="Away Team"
                           ml="auto"
                           boxSize="32px"
-                          fallback={<SkeletonCircle ml="auto"/>}
+                          fallback={<SkeletonCircle ml='auto'/>}
                           src={
                             teamsData.find(
                               (team) => game.awayTeam.id === team.id
@@ -113,16 +113,16 @@ const ActiveGames = ({
                               (team) => game.homeTeam.id === team.id
                             ).school
                         ) && (
-                            <Badge mb={1} mr={1}>
-                              {rankingsData.ranks.find(
-                                (ranking) =>
-                                  ranking.school ===
+                          <Badge mb={1} mr={1}>
+                            {rankingsData.ranks.find(
+                              (ranking) =>
+                                ranking.school ===
                                   teamsData.find(
                                     (team) => game.homeTeam.id === team.id
                                   ).school
-                              )?.rank ?? ""}
-                            </Badge>
-                          )}
+                            )?.rank ?? ""}
+                          </Badge>
+                        )}
                         {game.homeTeam.name}
                       </Box>
                       <Box w="30%">
@@ -136,16 +136,16 @@ const ActiveGames = ({
                               (team) => game.awayTeam.id === team.id
                             ).school
                         ) && (
-                            <Badge mb={1} mr={1}>
-                              {rankingsData.ranks.find(
-                                (ranking) =>
-                                  ranking.school ===
+                          <Badge mb={1} mr={1}>
+                            {rankingsData.ranks.find(
+                              (ranking) =>
+                                ranking.school ===
                                   teamsData.find(
                                     (team) => game.awayTeam.id === team.id
                                   ).school
-                              )?.rank ?? ""}
-                            </Badge>
-                          )}
+                            )?.rank ?? ""}
+                          </Badge>
+                        )}
                         {game.awayTeam.name}
                       </Box>
                     </Flex>

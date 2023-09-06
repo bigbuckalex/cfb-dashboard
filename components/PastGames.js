@@ -12,7 +12,6 @@ import {
   SkeletonCircle,
 } from "@chakra-ui/react"
 import Moment from "react-moment"
-import moment from "moment"
 import NaturalLanguageDay from "./NaturalLanguageDay"
 
 const PastGames = ({

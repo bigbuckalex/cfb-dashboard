@@ -14,7 +14,6 @@ import {
   InputRightElement,
   Progress,
   Switch,
-  Text,
 } from "@chakra-ui/react"
 import { IoMdRefresh } from "react-icons/io"
 import PastGames from "./PastGames"
