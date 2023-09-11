@@ -61,7 +61,9 @@ const FutureGames = ({
         size="lg"
         min={currentWeek}
         max={gamesCalendar.length}
-        maxWidth={700}
+        maxWidth={600}
+        ml={10}
+        mr={10}
         onChange={(val) => setSelectedWeek(val)}
         mb={10}
       >

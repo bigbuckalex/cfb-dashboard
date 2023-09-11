@@ -60,7 +60,9 @@ const PastGames = ({
         size="lg"
         max={currentWeek}
         min={1}
-        maxWidth={700}
+        maxWidth={600}
+        ml={10}
+        mr={10}
         onChange={(val) => setSelectedWeek(val)}
         mb={10}
       >
