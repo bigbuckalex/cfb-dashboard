@@ -15,7 +15,6 @@ import {
 import { IoMdAmericanFootball } from "react-icons/io";
 
 const getFormattedPeriod = (period) => {
-  console.log(period);
   if (period > 4) {
     return `${period - 4} OT`;
   }
@@ -44,7 +43,6 @@ const ActiveGames = ({
   search,
   tvGamesOnly,
 }) => {
-  console.log(gamesData.map((game) => game.status === "in_progress"));
   if (gamesData.find((game) => game.status === "in_progress") === undefined)
     return (
       <Text align="center">

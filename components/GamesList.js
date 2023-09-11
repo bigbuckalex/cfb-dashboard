@@ -32,6 +32,9 @@ const GamesList = () => {
   const [search, setSearch] = useState("");
   const [tab, setTab] = useLocalStorage("tab", "now");
   const [tvGamesOnly, setTvGamesOnly] = useLocalStorage("tvGamesOnly", "false");
+  const [currentWeek, setCurrentWeek] = useState(null);
+  const [allGamesData, setAllGamesData] = useState([]);
+  const [gamesCalendar, setGamesCalendar] = useState([]);
 
   useEffect(() => {
     axios.get("/api/api").then(
@@ -51,6 +54,23 @@ const GamesList = () => {
         setError(error);
       }
     );
+    axios.get("/api/api-by-week").then(
+      (result) => {
+        setGamesCalendar(result.data[0]);
+        const currentWeek = result.data[0].find(
+          (e) => Date.parse(e.lastGameStart) > Date.now()
+        ).week;
+        console.log(`currentWeek: ${currentWeek}`);
+        setCurrentWeek(currentWeek);
+        setAllGamesData(result.data[1]);
+      },
+      (error) => {
+        setError(error);
+        setTimeout(() => {
+          setRefreshing(false);
+        }, 1000);
+      }
+    );
   }, []);
 
   const refresh = () => {
@@ -67,6 +87,22 @@ const GamesList = () => {
         setTimeout(() => {
           setRefreshing(false);
         }, 1000);
+      },
+      (error) => {
+        setError(error);
+        setTimeout(() => {
+          setRefreshing(false);
+        }, 1000);
+      }
+    );
+    axios.get("/api/api-by-week").then(
+      (result) => {
+        const currentWeek = result.data[0].find(
+          (e) => Date.parse(e.lastGameStart) > Date.now()
+        ).week;
+        console.log(`currentWeek: ${currentWeek}`);
+        setCurrentWeek(currentWeek);
+        setAllGamesData(result.data[1]);
       },
       (error) => {
         setError(error);
@@ -195,6 +231,8 @@ const GamesList = () => {
               rankingsData={rankingsData}
               search={search}
               tvGamesOnly={tvGamesOnly}
+              currentWeek={currentWeek}
+              allGamesData={allGamesData}
             />
           )}
           {tab === "now" && (
@@ -213,6 +251,9 @@ const GamesList = () => {
               rankingsData={rankingsData}
               search={search}
               tvGamesOnly={tvGamesOnly}
+              currentWeek={currentWeek}
+              allGamesData={allGamesData}
+              gamesCalendar={gamesCalendar}
             />
           )}
           <Progress
