@@ -7,18 +7,17 @@ import {
   AccordionPanel,
   VStack,
   Text,
-  Divider,
   Image,
   Badge,
   SkeletonCircle,
   Slider,
-  SliderMark,
   SliderTrack,
-  SliderFilledTrack,
   SliderThumb,
+  Tooltip,
 } from "@chakra-ui/react";
 import Moment from "react-moment";
 import NaturalLanguageDay from "./NaturalLanguageDay";
+import AwayAtHome from "./AwayAtHome";
 
 const FutureGames = ({
   gamesData,
@@ -32,6 +31,8 @@ const FutureGames = ({
 }) => {
   const [futureGamesData, setFutureGamesData] = useState([]);
   const [selectedWeek, setSelectedWeek] = useState(currentWeek);
+  const [sliderValue, setSliderValue] = useState(currentWeek);
+  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
 
   useEffect(() => {
     getFutureGamesData(selectedWeek);
@@ -48,35 +49,54 @@ const FutureGames = ({
         );
   };
 
-  const labelStyles = {
-    mt: "2",
-    ml: "-1.5",
-    fontSize: "sm",
-    textAlign: "center",
-  };
   return (
     <>
-      <Slider
-        defaultValue={currentWeek}
-        size="lg"
-        min={currentWeek}
-        max={gamesCalendar.length}
-        maxWidth={600}
-        ml={10}
-        mr={10}
-        onChange={(val) => setSelectedWeek(val)}
-        mb={10}
-      >
-        {[...Array(gamesCalendar.length - currentWeek + 1)].map((e, i) => (
-          <SliderMark value={currentWeek + i} {...labelStyles} key={i}>
-            {i === 0 ? "Now" : currentWeek + i}
-          </SliderMark>
-        ))}
-        <SliderTrack>
-          <SliderFilledTrack />
-        </SliderTrack>
-        <SliderThumb />
-      </Slider>
+      <Flex mr={2} ml={2}>
+        {selectedWeek === currentWeek ? (
+          <Text align="center" w="110px" mr={4} ml={2}>
+            Now
+          </Text>
+        ) : (
+          <Text
+            align="center"
+            w="110px"
+            mr={4}
+            ml={2}
+          >{`Week ${selectedWeek}`}</Text>
+        )}
+        <Slider
+          mr={4}
+          ml={0}
+          defaultValue={currentWeek}
+          focusThumbOnChange={false}
+          size="lg"
+          max={gamesCalendar.length}
+          min={currentWeek}
+          onChangeStart={() => setIsTooltipOpen(true)}
+          onChange={(val) => setSliderValue(val)}
+          onChangeEnd={(val) => {
+            setSelectedWeek(val);
+            setTimeout(() => {
+              setIsTooltipOpen(false);
+            }, 200);
+          }}
+        >
+          <SliderTrack></SliderTrack>
+          <Tooltip
+            mr={1}
+            ml={1}
+            backgroundColor="white"
+            color="black"
+            hasArrow
+            placement="top"
+            label={`Week ${sliderValue}`}
+            isOpen={isTooltipOpen}
+          >
+            <SliderThumb />
+          </Tooltip>
+        </Slider>
+      </Flex>
+      <AwayAtHome />
       {selectedWeek === currentWeek
         ? gamesData.map(
             (game) =>

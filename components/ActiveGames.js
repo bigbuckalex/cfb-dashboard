@@ -13,6 +13,7 @@ import {
   SkeletonCircle,
 } from "@chakra-ui/react";
 import { IoMdAmericanFootball } from "react-icons/io";
+import AwayAtHome from "./AwayAtHome";
 
 const getFormattedPeriod = (period) => {
   if (period > 4) {
@@ -43,15 +44,21 @@ const ActiveGames = ({
   search,
   tvGamesOnly,
 }) => {
-  if (gamesData.find((game) => game.status === "in_progress") === undefined)
+  if (!gamesData.some((game) => game.status === "in_progress"))
     return (
-      <Text align="center">
-        There are no FBS college football games on right now :(
-      </Text>
+      <Flex direction="column">
+        <Text m={4} align="center">
+          There are no FBS college football games on right now :(
+        </Text>
+        <Text m={4} align="center">
+          Check out the Future tab to see which games are coming up!
+        </Text>
+      </Flex>
     );
   else
     return (
       <>
+        <AwayAtHome />
         {gamesData.map(
           (game) =>
             game.status === "in_progress" &&

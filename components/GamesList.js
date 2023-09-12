@@ -3,7 +3,6 @@ import axios from "axios";
 import {
   Flex,
   Box,
-  Text,
   Accordion,
   AccordionItem,
   IconButton,
@@ -35,6 +34,7 @@ const GamesList = () => {
   const [currentWeek, setCurrentWeek] = useState(null);
   const [allGamesData, setAllGamesData] = useState([]);
   const [gamesCalendar, setGamesCalendar] = useState([]);
+  // const [areGamesInProgress, setAreGamesInProgress] = useState(null);
 
   useEffect(() => {
     axios.get("/api/api").then(
@@ -71,6 +71,9 @@ const GamesList = () => {
         }, 1000);
       }
     );
+    // setAreGamesInProgress(
+    //   gamesData.some((game) => game.status === "in_progress")
+    // );
   }, []);
 
   const refresh = () => {
@@ -204,21 +207,6 @@ const GamesList = () => {
               Televised games only?
             </Switch>
           </AccordionItem>
-          <AccordionItem>
-            <h2>
-              <Flex p={4} w="100%" justify="space-between">
-                <Flex textAlign="left" direction="column">
-                  <Text>Away</Text>
-                </Flex>
-                <Flex textAlign="center">
-                  <Text>@</Text>
-                </Flex>
-                <Flex textAlign="right" direction="column">
-                  <Text>Home</Text>
-                </Flex>
-              </Flex>
-            </h2>
-          </AccordionItem>
           <Progress
             visibility={!refreshing && "hidden"}
             size="xs"
@@ -261,6 +249,7 @@ const GamesList = () => {
             size="xs"
             isIndeterminate
           />
+          {/* {areGamesInProgress && ( */}
           <AccordionItem>
             <h2>
               <Box p={4} w="100%" textAlign="right">
@@ -272,6 +261,7 @@ const GamesList = () => {
               </Box>
             </h2>
           </AccordionItem>
+          {/* )} */}
         </Accordion>
       </>
     );
