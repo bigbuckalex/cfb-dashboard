@@ -65,8 +65,9 @@ const FutureGames = ({
           >{`Week ${selectedWeek}`}</Text>
         )}
         <Slider
-          mr={4}
+          mr={6}
           ml={0}
+          mb={4}
           defaultValue={currentWeek}
           focusThumbOnChange={false}
           size="lg"

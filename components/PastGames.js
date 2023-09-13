@@ -52,21 +52,10 @@ const PastGames = ({
   return (
     <>
       <Flex mr={2} ml={2}>
-        {selectedWeek === currentWeek ? (
-          <Text align="center" w="110px" mr={4} ml={2}>
-            Now
-          </Text>
-        ) : (
-          <Text
-            align="center"
-            w="110px"
-            mr={4}
-            ml={2}
-          >{`Week ${selectedWeek}`}</Text>
-        )}
         <Slider
-          mr={4}
-          ml={0}
+          mr={0}
+          ml={6}
+          mb={4}
           defaultValue={currentWeek}
           focusThumbOnChange={false}
           size="lg"
@@ -95,6 +84,18 @@ const PastGames = ({
             <SliderThumb />
           </Tooltip>
         </Slider>
+        {selectedWeek === currentWeek ? (
+          <Text align="center" w="110px" mr={4} ml={2}>
+            Now
+          </Text>
+        ) : (
+          <Text
+            align="center"
+            w="110px"
+            mr={2}
+            ml={4}
+          >{`Week ${selectedWeek}`}</Text>
+        )}
       </Flex>
       <AwayAtHome />
       {selectedWeek === currentWeek
