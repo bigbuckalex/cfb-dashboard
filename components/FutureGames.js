@@ -10,14 +10,11 @@ import {
   Image,
   Badge,
   SkeletonCircle,
-  Slider,
-  SliderTrack,
-  SliderThumb,
-  Tooltip,
 } from "@chakra-ui/react";
 import Moment from "react-moment";
 import NaturalLanguageDay from "./NaturalLanguageDay";
 import AwayAtHome from "./AwayAtHome";
+import FutureSlider from "./FutureSlider";
 
 const FutureGames = ({
   gamesData,
@@ -31,8 +28,6 @@ const FutureGames = ({
 }) => {
   const [futureGamesData, setFutureGamesData] = useState([]);
   const [selectedWeek, setSelectedWeek] = useState(currentWeek);
-  const [sliderValue, setSliderValue] = useState(currentWeek);
-  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
 
   useEffect(() => {
     getFutureGamesData(selectedWeek);
@@ -51,52 +46,12 @@ const FutureGames = ({
 
   return (
     <>
-      <Flex mr={2} ml={2}>
-        {selectedWeek === currentWeek ? (
-          <Text align="center" w="110px" mr={4} ml={2}>
-            Now
-          </Text>
-        ) : (
-          <Text
-            align="center"
-            w="110px"
-            mr={4}
-            ml={2}
-          >{`Week ${selectedWeek}`}</Text>
-        )}
-        <Slider
-          mr={6}
-          ml={0}
-          mb={4}
-          defaultValue={currentWeek}
-          focusThumbOnChange={false}
-          size="lg"
-          max={gamesCalendar.length}
-          min={currentWeek}
-          onChangeStart={() => setIsTooltipOpen(true)}
-          onChange={(val) => setSliderValue(val)}
-          onChangeEnd={(val) => {
-            setSelectedWeek(val);
-            setTimeout(() => {
-              setIsTooltipOpen(false);
-            }, 200);
-          }}
-        >
-          <SliderTrack></SliderTrack>
-          <Tooltip
-            mr={1}
-            ml={1}
-            backgroundColor="white"
-            color="black"
-            hasArrow
-            placement="top"
-            label={`Week ${sliderValue}`}
-            isOpen={isTooltipOpen}
-          >
-            <SliderThumb />
-          </Tooltip>
-        </Slider>
-      </Flex>
+      <FutureSlider
+        gamesCalendar={gamesCalendar}
+        currentWeek={currentWeek}
+        selectedWeek={selectedWeek}
+        setSelectedWeek={setSelectedWeek}
+      />
       <AwayAtHome />
       {selectedWeek === currentWeek
         ? gamesData.map(

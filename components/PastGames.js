@@ -19,6 +19,7 @@ import {
 import Moment from "react-moment";
 import NaturalLanguageDay from "./NaturalLanguageDay";
 import AwayAtHome from "./AwayAtHome";
+import PastSlider from "./PastSlider";
 
 const PastGames = ({
   gamesData,
@@ -31,8 +32,6 @@ const PastGames = ({
 }) => {
   const [pastGamesData, setPastGamesData] = useState([]);
   const [selectedWeek, setSelectedWeek] = useState(currentWeek);
-  const [sliderValue, setSliderValue] = useState(currentWeek);
-  const [isToolTipOpen, setIsTooltipOpen] = useState(false);
 
   useEffect(() => {
     getPastGamesData(selectedWeek);
@@ -51,52 +50,11 @@ const PastGames = ({
 
   return (
     <>
-      <Flex mr={2} ml={2}>
-        <Slider
-          mr={0}
-          ml={6}
-          mb={4}
-          defaultValue={currentWeek}
-          focusThumbOnChange={false}
-          size="lg"
-          max={currentWeek}
-          min={1}
-          onChangeStart={() => setIsTooltipOpen(true)}
-          onChange={(val) => setSliderValue(val)}
-          onChangeEnd={(val) => {
-            setSelectedWeek(val);
-            setTimeout(() => {
-              setIsTooltipOpen(false);
-            }, 100);
-          }}
-        >
-          <SliderTrack></SliderTrack>
-          <Tooltip
-            mr={1}
-            ml={1}
-            backgroundColor="white"
-            color="black"
-            hasArrow
-            placement="top"
-            label={`Week ${sliderValue}`}
-            isOpen={isToolTipOpen}
-          >
-            <SliderThumb />
-          </Tooltip>
-        </Slider>
-        {selectedWeek === currentWeek ? (
-          <Text align="center" w="110px" mr={4} ml={2}>
-            Now
-          </Text>
-        ) : (
-          <Text
-            align="center"
-            w="110px"
-            mr={2}
-            ml={4}
-          >{`Week ${selectedWeek}`}</Text>
-        )}
-      </Flex>
+      <PastSlider
+        currentWeek={currentWeek}
+        selectedWeek={selectedWeek}
+        setSelectedWeek={setSelectedWeek}
+      />
       <AwayAtHome />
       {selectedWeek === currentWeek
         ? gamesData.map(
